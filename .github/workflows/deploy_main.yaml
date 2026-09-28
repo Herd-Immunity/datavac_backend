@@ -1,8 +1,8 @@
 ---
-name: Deploy Develop Version
+name: Deploy Production Version
 on:  # yamllint disable-line rule:truthy
   push:
-    branches: [develop]
+    branches: [main]
   workflow_dispatch:  # Allow manual triggering
 
 env:
@@ -11,7 +11,7 @@ env:
 jobs:
   test:
     runs-on: ubuntu-latest
-    environment: dev
+    environment: prod
     steps:
       - name: 1. Checkout repository code
         uses: actions/checkout@v4
@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     needs: test
-    environment: dev
+    environment: prod
     env:
       CI_DEBUG: False
       CI_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
@@ -83,4 +83,4 @@ jobs:
           script: |
             mkdir -p ~/frontend/dist
             cd backend
-            docker/deploy_dev_server.sh
+            docker/deploy_prod_server.sh
