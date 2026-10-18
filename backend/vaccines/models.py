@@ -209,6 +209,7 @@ class VaccineCardVersion(models.Model):
         null=True,
         verbose_name='Применение при беременности старое',
     )
+    pregnancy_usage_text = models.TextField(blank=True, null=True, verbose_name='Текст применение при беременности')
     storage_conditions = models.TextField(
         blank=True,
         null=True,
